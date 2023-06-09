@@ -1,12 +1,13 @@
 package com.example.form_app
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-data class RptHeaderAdapter(private val headerTitles : ArrayList<RptHeader>) : RecyclerView.Adapter<RptHeaderAdapter.RptViewHolder>() {
+data class RptHeaderAdapter(private val headerTitles : ArrayList<RptHeader>, private val listener: OnItemClickListener) : RecyclerView.Adapter<RptHeaderAdapter.RptViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RptViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.report_header_item,
@@ -23,8 +24,23 @@ data class RptHeaderAdapter(private val headerTitles : ArrayList<RptHeader>) : R
         holder.btnHeadingTitle.text = currentItem.headerBtnName
     }
 
-    class RptViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView)
-    {
-        val btnHeadingTitle : Button = itemView.findViewById(R.id.rpt_header_btn)
+    inner class RptViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+        val btnHeadingTitle : TextView = itemView.findViewById(R.id.rpt_header_btn)
+
+        init {
+            itemView.setOnClickListener (this)
+        }
+
+        override fun onClick(v: View?) {
+            val position: Int = adapterPosition
+            //if (position!=RecyclerView.NO_POSITION)
+            Log.i("console", "please:")
+            listener.onItemClick(position)
+        }
+    }
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+
     }
 }

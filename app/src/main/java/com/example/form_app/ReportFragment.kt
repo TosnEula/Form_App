@@ -1,10 +1,12 @@
 package com.example.form_app
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,24 +16,30 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class ReportFragment : Fragment() {
+class ReportFragment : Fragment(), RptHeaderAdapter.OnItemClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private var listNameAndTitle :List<List<String>> = listOf(
+        listOf("Vero", "Maintenance Report", "Daily Report"),
+        listOf("Laundry", "Test Report"),
+        listOf("Kitchen", "Test Report2", "Test Report3"),
+        listOf("Ecoburner", "Test Report4", "Test Report5", "Test Report6")
+    )
 
     //Header recycle view variables
     private lateinit var headerAdapter: RptHeaderAdapter
     private lateinit var headerRecyclerView: RecyclerView
     private lateinit var headerBtnArrayList: ArrayList<RptHeader>
 
-    lateinit var titleHeaders : Array<String>
-
     //Body recycle view variables
     private lateinit var bodyAdapter: RptBodyAdapter
     private lateinit var bodyRecyclerView: RecyclerView
     private lateinit var bodyBtnArrayList: ArrayList<RptBody>
 
-    lateinit var bodyNames :  Array<String>
+    private var startPosition : Int= 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,14 +58,7 @@ class ReportFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ReportFragment.
-         */
+
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -78,47 +79,57 @@ class ReportFragment : Fragment() {
         headerRecyclerView = view.findViewById(R.id.reports_heading_rv)
         headerRecyclerView.layoutManager = layoutManager
         headerRecyclerView.setHasFixedSize(true)
-        headerAdapter = RptHeaderAdapter(headerBtnArrayList)
+        headerAdapter = RptHeaderAdapter(headerBtnArrayList, this@ReportFragment)
         headerRecyclerView.adapter = headerAdapter
 
+
+
+
+
+
         //body recycler logic
-        bodyDataInitialize()
+        bodyDataInitialize(startPosition)
         val bodLayoutManager = LinearLayoutManager(context)
         bodyRecyclerView = view.findViewById(R.id.reports_body_rv)
         bodyRecyclerView.layoutManager = bodLayoutManager
-        bodyRecyclerView.setHasFixedSize(true)
+        bodyRecyclerView.setHasFixedSize(false)
         bodyAdapter = RptBodyAdapter(bodyBtnArrayList)
         bodyRecyclerView.adapter = bodyAdapter
+
 
     }
 
     private fun dataInitialize() {
         headerBtnArrayList = arrayListOf<RptHeader>()
 
-        titleHeaders = arrayOf(
-            "Vero",
-            "Laundry",
-            "Kitchen",
-            "Ecoburner"
-        )
-
-        for (i in titleHeaders)
+        for (i in listNameAndTitle)
         {
-            headerBtnArrayList.add(RptHeader(i))
+            headerBtnArrayList.add(RptHeader(i[0]))
+
         }
+
     }
 
-    private fun bodyDataInitialize() {
+
+    private fun bodyDataInitialize(bodyPosition : Int) {
         bodyBtnArrayList = arrayListOf<RptBody>()
+        var i: Int = 1
 
-        bodyNames = arrayOf(
-            "Maintenance Report",
-            "Daily Report",
-        )
-
-        for (i in bodyNames)
+        while (i < listNameAndTitle[bodyPosition].size)
         {
-            bodyBtnArrayList.add(RptBody(i))
+            bodyBtnArrayList.add(RptBody(listNameAndTitle[bodyPosition][i]))
+            i++
         }
+
+
+    }
+
+    override fun onItemClick(position: Int) {
+        Toast.makeText(requireContext(), "this is: $position", Toast.LENGTH_SHORT).show()
+        Log.i("console","what")
+        bodyDataInitialize(position)
+        bodyAdapter = RptBodyAdapter(bodyBtnArrayList)
+        bodyRecyclerView.adapter = bodyAdapter
+        bodyAdapter.notifyItemChanged(position)
     }
 }
