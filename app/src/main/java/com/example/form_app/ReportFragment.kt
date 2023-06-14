@@ -1,12 +1,11 @@
 package com.example.form_app
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -16,38 +15,30 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class ReportFragment : Fragment(), RptHeaderAdapter.OnItemClickListener {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class ReportFragment : Fragment(), RptHeaderAdapter.OnItemClickListener,RptBodyAdapter.OnItemClickListener {
 
     private var listNameAndTitle :List<List<String>> = listOf(
-        listOf("Vero", "Maintenance Report", "Daily Report"),
+        listOf("Vero", "Maintenance", "Daily Report"),
         listOf("Laundry", "Test Report"),
         listOf("Kitchen", "Test Report2", "Test Report3"),
         listOf("Ecoburner", "Test Report4", "Test Report5", "Test Report6")
     )
-
     //Header recycle view variables
     private lateinit var headerAdapter: RptHeaderAdapter
     private lateinit var headerRecyclerView: RecyclerView
     private lateinit var headerBtnArrayList: ArrayList<RptHeader>
+
+
+    private var startPosition : Int = 0
+    private var headSelected : Int = 0
+    private var prvHead : Int = -1
 
     //Body recycle view variables
     private lateinit var bodyAdapter: RptBodyAdapter
     private lateinit var bodyRecyclerView: RecyclerView
     private lateinit var bodyBtnArrayList: ArrayList<RptBody>
 
-    private var startPosition : Int= 0
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,9 +74,7 @@ class ReportFragment : Fragment(), RptHeaderAdapter.OnItemClickListener {
         headerRecyclerView.adapter = headerAdapter
 
 
-
-
-
+        //set the first header as selected
 
         //body recycler logic
         bodyDataInitialize(startPosition)
@@ -93,9 +82,8 @@ class ReportFragment : Fragment(), RptHeaderAdapter.OnItemClickListener {
         bodyRecyclerView = view.findViewById(R.id.reports_body_rv)
         bodyRecyclerView.layoutManager = bodLayoutManager
         bodyRecyclerView.setHasFixedSize(false)
-        bodyAdapter = RptBodyAdapter(bodyBtnArrayList)
+        bodyAdapter = RptBodyAdapter(bodyBtnArrayList, this@ReportFragment)
         bodyRecyclerView.adapter = bodyAdapter
-
 
     }
 
@@ -124,12 +112,27 @@ class ReportFragment : Fragment(), RptHeaderAdapter.OnItemClickListener {
 
     }
 
-    override fun onItemClick(position: Int) {
-        Toast.makeText(requireContext(), "this is: $position", Toast.LENGTH_SHORT).show()
-        Log.i("console","what")
+    override fun headerOnItemClick(position: Int) {
         bodyDataInitialize(position)
-        bodyAdapter = RptBodyAdapter(bodyBtnArrayList)
+        bodyAdapter = RptBodyAdapter(bodyBtnArrayList, this@ReportFragment)
         bodyRecyclerView.adapter = bodyAdapter
-        bodyAdapter.notifyItemChanged(position)
+        headSelected = position
+
+
+        headerAdapter.notifyItemChanged(headSelected)
+        headerAdapter.notifyItemChanged(prvHead)
+        prvHead = headSelected
+    }
+
+    override fun bodyOnItemClick(position: Int) {
+
+        //Toast.makeText(requireContext(), "this is: $position", Toast.LENGTH_SHORT).show()
+        val intent = Intent(requireContext(), ReportFormDataActivity::class.java)
+
+        intent.putExtra("category", headerBtnArrayList[headSelected].headerBtnName)
+        intent.putExtra("report", bodyBtnArrayList[position].bodyBtnName)
+        startActivity(intent)
+
+
     }
 }
