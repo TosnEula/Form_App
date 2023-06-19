@@ -3,7 +3,6 @@ package com.example.form_app
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -11,7 +10,7 @@ import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
     lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //Allows the back arrow to close the drawer
 
+        //provides logic to each element in the drawer
         navView.setNavigationItemSelectedListener {
             it.isChecked = true
             when (it.itemId) {
@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity() {
         setTitle(title)
     }
 
+    //checks to see if the item selected is in the drawer
+    //otherwise passes it to the parent(activity)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)){
             true

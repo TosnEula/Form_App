@@ -1,19 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ReportFormDataActivity"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReportFormDataActivity">
 
+    android:orientation="vertical">
+
+  <!--customer name fields-->
   <TextView
-      android:id="@+id/textView"
+      android:id="@+id/cust_name_tv"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginStart="75dp"
-      android:layout_marginTop="82dp"
-      android:text="TextView"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+      android:layout_marginTop="20dp"
+      android:text="What is the customer's name?"
+      android:layout_gravity="center_horizontal"
+      />
+
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="111.5dp"
+      android:layout_height="2dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="10dp"
+      android:background="@android:color/darker_gray"/>
+
+  <EditText
+    android:id="@+id/cust_name_et"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="E.g. John Doe"
+    android:autofillHints="name"
+    android:inputType="textPersonName"
+    android:textColor="@color/black"
+    android:background="@drawable/text_field_bg"
+    android:textCursorDrawable="@null"
+    android:layout_marginHorizontal="40dp"
+    android:layout_marginBottom="10dp"
+    android:paddingVertical="5dp"
+    android:paddingHorizontal="20dp" />
+
+  <!--location field-->
+  <TextView
+      android:id="@+id/location_tv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:text="Where is this located?"
+      android:layout_gravity="center_horizontal"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="111.5dp"
+      android:layout_height="2dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="10dp"
+      android:background="@android:color/darker_gray"/>
+
+
+  <EditText
+      android:id="@+id/location_et"
+      android:layout_gravity="center_horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Parish, Town, P.O."
+      android:autofillHints="postalAddress"
+      android:inputType="textPostalAddress"
+      android:textColor="@color/black"
+      android:background="@drawable/text_field_bg"
+      android:textCursorDrawable="@null"
+      android:layout_marginHorizontal="40dp"
+
+      android:layout_marginBottom="10dp"
+      android:paddingVertical="5dp"
+      android:paddingHorizontal="20dp"/>
+
+  <!--dispenser model-->
+  <TextView
+      android:id="@+id/dispen_model_tv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:text="What is the dispenser's model?"
+      android:layout_gravity="center_horizontal"
+      />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="111.5dp"
+      android:layout_height="2dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="10dp"
+      android:background="@android:color/darker_gray"/>
+
+
+  <EditText
+      android:id="@+id/dispen_model_et"
+      android:layout_gravity="center_horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="40dp"
+      android:layout_marginBottom="10dp"
+      android:hint="Dispenser model"
+      android:inputType="text"
+      android:textColor="@color/black"
+      android:background="@drawable/text_field_bg"
+      android:textCursorDrawable="@null"
+      android:paddingVertical="5dp"
+      android:paddingHorizontal="20dp"/>
+
+  <!--dispenser serial-->
+  <TextView
+      android:id="@+id/dispen_serial_tv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:text="What is the dispenser's serial?"
+      android:layout_gravity="center_horizontal" />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="111.5dp"
+      android:layout_height="2dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="10dp"
+      android:background="@android:color/darker_gray"/>
+
+
+  <EditText
+      android:id="@+id/dispen_serial_et"
+      android:layout_gravity="center_horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Dispenser serial"
+      android:layout_marginHorizontal="40dp"
+
+      android:layout_marginBottom="10dp"
+      android:inputType="text"
+      android:textColor="@color/black"
+      android:background="@drawable/text_field_bg"
+      android:textCursorDrawable="@null"
+      android:paddingVertical="5dp"
+      android:paddingHorizontal="20dp"/>
+
+
+  <!--potential solution-->
+  <TextView
+      android:id="@+id/poten_solu_tv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:text="Are there any known solutions?"
+      android:layout_gravity="center_horizontal" />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="111.5dp"
+      android:layout_height="2dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="10dp"
+      android:background="@android:color/darker_gray"/>
+
+
+  <EditText
+      android:id="@+id/poten_solu_et"
+      android:layout_gravity="center_horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="text"
+      android:textColor="@color/black"
+      android:background="@drawable/text_field_bg"
+      android:textCursorDrawable="@null"
+      android:layout_marginHorizontal="40dp"
+      android:layout_marginBottom="10dp"
+      android:paddingVertical="5dp"
+      android:paddingHorizontal="20dp"/>
+
+  <!--additional information-->
+  <TextView
+      android:id="@+id/add_info_tv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:text="Additional information"
+      android:layout_gravity="center_horizontal" />
+
+  <View
+      android:layout_width="match_parent"
+      android:layout_marginHorizontal="111.5dp"
+      android:layout_height="2dp"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="10dp"
+      android:background="@android:color/darker_gray"/>
+
+
+  <EditText
+      android:id="@+id/add_info_et"
+      android:layout_gravity="center_horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:gravity="top"
+      android:inputType="textMultiLine"
+      android:textColor="@color/black"
+      android:background="@drawable/text_field_bg"
+      android:textCursorDrawable="@null"
+      android:paddingVertical="5dp"
+      android:paddingHorizontal="20dp"
+      android:layout_marginHorizontal="50dp"
+      android:layout_marginBottom="10dp"/>
+
+  <Button
+      android:id="@+id/save_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:backgroundTint="@color/light_blue"
+      android:text="@string/save"
+      android:layout_gravity="center_horizontal"/>
+
+
+</LinearLayout>
+
+
+</ScrollView>
